@@ -1,0 +1,10 @@
+.ipynb_checkpoints
+.mypy_cache
+.vscode
+__pycache__/
+build
+dist
+results
+data
+.pt
+lightning_logs

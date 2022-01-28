@@ -7,6 +7,8 @@ Ideas for research work:
 - Benchmark with NASA N-CMAPSS [2] dataset on the recent big NASA dataset Arias et al.
 Few publications yet with N-CMAPSS, so it might be an opportunity to publish.
 
+For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
+
 ### Datasets
 
 NASA DASHlink:
@@ -18,7 +20,7 @@ Classical benchmark dataset. Lots of published articles for RUL benchmarking inc
 2) N-CMAPSS dataset for turbojet engines (/data/data/nasa/CMAPSSData2.zip)
 Arias Chao, Manuel, Chetan Kulkarni, Kai Goebel, et Olga Fink. « Aircraft Engine Run-to-Failure Dataset under Real Flight Conditions for Prognostics and Diagnostics ». Data 6, nᵒ 1 (13 janvier 2021): 5. https://doi.org/10.3390/data6010005.
 Very recent, bigger and more realistic dataset than CMAPSS.
-[See 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/)
+
 
 ### References BNN
 
@@ -57,12 +59,15 @@ Recent technique with few published material, so may be worth including it in a 
 
 
 ### Tools
-1) pyro: Deep Universal Probabilistic Programming
+1) [pyro](https://pyro.ai/): Deep Universal Probabilistic Programming
 Tutorial: http://pyro.ai/examples/intro_long.html
 
-2) TyXE: Pyro-based BNNs for Pytorch users
+2) [TyXE](https://github.com/TyXe-BDL/TyXe): Pyro-based BNNs for Pytorch users
 Linear and CNN based BNN implemented.
 For RNN based BNN with flipout see issue #6
+
+3) [Edward2](https://github.com/google/edward2):
+A simple probabilistic programming language. Same purpose than pyro+tyxe but with tensorflow, numpy or jax as backends.
 
 3) https://github.com/kkangshen/bayesian-deep-rul
 

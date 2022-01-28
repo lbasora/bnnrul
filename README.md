@@ -3,7 +3,7 @@
 Tools to test BNN inference algorithms and techniques to predict RUL on aeronautical systems.
 
 Ideas for research work:
-- Benchmark with NASA CMAPSS [1] dataset complementary to the existing ones (e.g. Caceres et al. [6]) by using other inference algorithms.
+- Benchmark with NASA CMAPSS [1] dataset complementary to the existing ones (e.g. Caceres et al. [9]) by using other inference algorithms.
 - Benchmark with NASA N-CMAPSS [2] dataset on the recent big NASA dataset Arias et al.
 Few publications yet with N-CMAPSS, so it might be an opportunity to publish.
 

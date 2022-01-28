@@ -18,6 +18,7 @@ Classical benchmark dataset. Lots of published articles for RUL benchmarking inc
 2) N-CMAPSS dataset for turbojet engines (/data/data/nasa/CMAPSSData2.zip)
 Arias Chao, Manuel, Chetan Kulkarni, Kai Goebel, et Olga Fink. « Aircraft Engine Run-to-Failure Dataset under Real Flight Conditions for Prognostics and Diagnostics ». Data 6, nᵒ 1 (13 janvier 2021): 5. https://doi.org/10.3390/data6010005.
 Very recent, bigger and more realistic dataset than CMAPSS.
+[See 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/)
 
 ### References BNN
 

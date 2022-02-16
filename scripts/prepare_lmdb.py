@@ -57,7 +57,9 @@ def make_slice(total: int, size: int, step: int) -> Iterator[slice]:
             return
 
 
-def extract_dataframes(file_train, file_test, subset="FD001", validation=0.00):
+def extract_dataframes(
+    file_train, file_test, file_rul, subset="FD001", validation=0.00
+):
     """Extract train, validation and test dataframe from source file.
 
     Parameters
@@ -113,6 +115,11 @@ def extract_dataframes(file_train, file_test, subset="FD001", validation=0.00):
         df_validation = pd.concat(df_validation)
 
     df_test = _load_data_from_file(file_test, subset=subset)
+    rul = np.asarray(file_rul.readlines(), dtype=np.int32)
+    cumul = []
+    for traj_id, traj in df_test.groupby("trajectory_id"):
+        cumul.append(traj.assign(rul=rul[traj_id - 1] - (traj.index - traj.index[0])))
+    df_test = pd.concat(cumul)
 
     print("Done.")
     return df_train, df_validation, df_test
@@ -163,94 +170,32 @@ def _load_data_from_file(file, subset="FD001"):
     df = df.drop(["t"], axis=1)
 
     # if subset in ["FD001", "FD003"]:
-    #     # drop operating_modes
-    #     df = df.drop(
-    #         ["setting_" + str(i + 1) for i in range(n_operational_settings)], axis=1
-    #     )
+    # drop operating_modes
+    # df = df.drop(
+    #     ["setting_" + str(i + 1) for i in range(n_operational_settings)], axis=1
+    # )
 
     # drop sensors which are useless according to the literature
     to_drop = [1, 5, 6, 10, 16, 18, 19]
     df = df.drop(["sensor_" + str(d) for d in to_drop], axis=1)
 
-    df = df.assign(subset=int(subset[-1]))
-
     return df
 
 
-def process_dataframe(df: pd.DataFrame, args) -> Iterator[Line]:
-    for system in range(1, len(args.features.columns) + 1):
-        if hasattr(args, "system") and args.system != system:
-            continue
-        sys_features = args.features[str(system)]
-        chunk = (
-            df.query(f"{sys_features[1]} == {sys_features[1]}")[sys_features]
-            .reset_index()
-            .drop(columns=["index"])
-        )
-        yield from process_chunk(chunk, tail, flight, system, args)
-
-
-def process_chunk(chunk, tail, flight, system, args):
-    if chunk.shape[0] >= args.win_length:
-        for sl in make_slice(chunk.shape[0], args.win_length, args.win_step):
-            data = chunk.iloc[sl, 1:].unstack().values
-            yield Line(
-                timestamp=chunk.timestamp.iloc[sl.start],
-                data=data,
-                tail=tail,
-                system=system,
-                flight=flight,
-            )
-    else:
-        args.excluded.append([tail, system, flight, "win_len"])
-
-
-def process_files(file_list: List[Path], args) -> Iterator[Line]:
-    for file in tqdm(file_list):
-        yield from process_dataframe(file, args)
-
-
-def feed_lmdb(output_lmdb: Path, filelist: List[Path], args) -> None:
-    patterns: Dict[str, Callable[[Line], Union[bytes, np.ndarray]]] = {
-        "{}": (
-            lambda line: line.data.astype(np.float32) if args.bits == 32 else line.data
-        ),
-        "id_{}": (lambda line: "{}".format(line.id).encode()),
-        "subset_{}": (lambda line: "{}".format(line.subset).encode()),
-        "settings{}": (
-            lambda line: line.settings.astype(np.float32)
-            if args.bits == 32
-            else line.settings
-        ),
-        "rul_{}": (lambda line: "{}".format(line.rul).encode()),
-    }
-
-    return create_lmdb(
-        filename=output_lmdb,
-        iterator=process_files(filelist, args),
-        patterns=patterns,
-        aggs=[MinMaxAggregate(args)],
-        win_length=args.win_length,
-        n_features=len(args.features) - 1,
-        bits=args.bits,
-    )
-
-
 def generate_parquet(args):
-    for subset, window in [("FD001", 30), ("FD002", 20), ("FD003", 30), ("FD004", 15)]:
+    for subset in args.subsets:
         print("**** %s ****" % subset)
         print("normalization = " + args.normalization)
-        print("window = " + str(window))
         print("validation = " + str(args.validation))
 
         # read .zip file into memory
-        with zipfile.ZipFile("data/cmapss/CMAPSSData.zip") as zip_file:
+        with zipfile.ZipFile(f"{args.out_path}/CMAPSSData.zip") as zip_file:
             file_train = zip_file.open("train_" + subset + ".txt")
             file_test = zip_file.open("test_" + subset + ".txt")
             file_rul = zip_file.open("RUL_" + subset + ".txt")
 
         print("Extracting dataframes...")
-        dataframes = extract_dataframes(
+        df_train, df_val, df_test = extract_dataframes(
             file_train=file_train,
             file_test=file_test,
             file_rul=file_rul,
@@ -259,11 +204,12 @@ def generate_parquet(args):
         )
 
         print("Generating parquet files...")
-        path = os.path.join(args.out_path, "parquet")
-        if not os.path.exists(path):
+        path = Path(args.out_path, "parquet")
+        if not path.exists():
             os.makedirs(path)
-        for df, prefix in zip(dataframes, ["train", "val", "test"]):
-            df.to_parquet(f"{path}/{prefix}_{subset}.parquet")
+        for df, prefix in zip([df_train, df_val, df_test], ["train", "val", "test"]):
+            if isinstance(df, pd.DataFrame):
+                df.to_parquet(f"{path}/{prefix}_{subset}.parquet")
 
 
 if __name__ == "__main__":

@@ -2,12 +2,12 @@
 
 Tools to test BNN inference algorithms and techniques to predict RUL on aeronautical systems.
 
-Ideas for research work:
+### Ideas for research work
 - Benchmark with NASA CMAPSS [1] dataset complementary to the existing ones (e.g. Caceres et al. [9]) by using other inference algorithms.
-- Benchmark with NASA N-CMAPSS [2] dataset on the recent big NASA dataset Arias et al.
+-  Benchmark with NASA N-CMAPSS [2] dataset on the recent big NASA dataset Arias et al.
 Few publications yet with N-CMAPSS, so it might be an opportunity to publish.
-
-For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
+    For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
+- Contribution to [TyXE](https://github.com/TyXe-BDL/TyXe) project (e.g. Flipout RNN - see issue #6)
 
 ### Datasets
 

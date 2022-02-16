@@ -6,5 +6,6 @@ build
 dist
 results
 data
-.pt
+*.pt
 lightning_logs
+bnnrul.egg-info

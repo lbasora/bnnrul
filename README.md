@@ -7,7 +7,8 @@ Tools to test BNN inference algorithms and techniques to predict RUL on aeronaut
 -  Benchmark with NASA N-CMAPSS [2] dataset on the recent big NASA dataset Arias et al.
 Few publications yet with N-CMAPSS, so it might be an opportunity to publish.
     For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
-- Contribution to [TyXE](https://github.com/TyXe-BDL/TyXe) project (e.g. Flipout RNN - see issue #6)
+
+Use of/contribution to [TyXE](https://github.com/TyXe-BDL/TyXe) (e.g. Flipout RNN - see issue #6) or [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning) github projects to be considered.
 
 ### Datasets
 
@@ -57,6 +58,8 @@ Recent technique with few published material, so may be worth including it in a 
 
 12) Peng, Weiwen, Zhi-Sheng Ye, et Nan Chen. « Bayesian Deep-Learning-Based Health Prognostics Toward Prognostics Uncertainty ». IEEE Transactions on Industrial Electronics 67, nᵒ 3 (mars 2020): 2283‑93. https://doi.org/10.1109/TIE.2019.2907440.
 
+13)  Benker, Maximilian, Lukas Furtner, Thomas Semm, et Michael F. Zaeh. « Utilizing Uncertainty Information in Remaining Useful Life Estimation via Bayesian Neural Networks and Hamiltonian Monte Carlo ». Journal of Manufacturing Systems, décembre 2020, S0278612520301928. https://doi.org/10.1016/j.jmsy.2020.11.005.
+
 
 ### Tools
 1) [pyro](https://pyro.ai/): Deep Universal Probabilistic Programming
@@ -64,13 +67,19 @@ Tutorial: http://pyro.ai/examples/intro_long.html
 
 2) [TyXE](https://github.com/TyXe-BDL/TyXe): Pyro-based BNNs for Pytorch users
 Linear and CNN based BNN implemented.
-For RNN based BNN with flipout see issue #6
+(For RNN based BNN with flipout see issue #6).
 
 3) [Edward2](https://github.com/google/edward2):
 A simple probabilistic programming language. Same purpose than pyro+tyxe but with tensorflow, numpy or jax as backends.
 
-3) https://github.com/kkangshen/bayesian-deep-rul
+4) [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
+A simple and extensible library to create Bayesian Neural Network layers on PyTorch. 
 
+5) [hamiltorch](https://github.com/AdamCobb/hamiltorch)
+PyTorch-based library for Riemannian Manifold Hamiltonian Monte Carlo (RMHMC) and inference in Bayesian neural networks.
+
+6) [bayesian-deep-rul](https://github.com/kkangshen/bayesian-deep-rul)
+Bayesian and frequentist deep learning models for remaining useful life (RUL) estimation are evaluated on simulated run-to-failure data. Implemented in PyTorch.
 
 
 

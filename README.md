@@ -62,23 +62,26 @@ Recent technique with few published material, so may be worth including it in a 
 
 
 ### Tools
-1) [pyro](https://pyro.ai/): Deep Universal Probabilistic Programming
+1) [pyro](https://pyro.ai/) Deep Universal Probabilistic Programming
 Tutorial: http://pyro.ai/examples/intro_long.html
 
-2) [TyXE](https://github.com/TyXe-BDL/TyXe): Pyro-based BNNs for Pytorch users
+2) [TyXE](https://github.com/TyXe-BDL/TyXe) Pyro-based BNNs for Pytorch users
 Linear and CNN based BNN implemented.
 (For RNN based BNN with flipout see issue #6).
 
-3) [Edward2](https://github.com/google/edward2):
+3) [Edward2](https://github.com/google/edward2)
 A simple probabilistic programming language. Same purpose than pyro+tyxe but with tensorflow, numpy or jax as backends.
 
-4) [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
+4) [bayesian-torch](https://github.com/IntelLabs/bayesian-torch#installing-bayesian-torch)
+A library for Bayesian neural network layers and uncertainty estimation in Deep Learning extending the core of PyTorch (developed by IntelLabs).
+
+5) [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
 A simple and extensible library to create Bayesian Neural Network layers on PyTorch. 
 
-5) [hamiltorch](https://github.com/AdamCobb/hamiltorch)
+6) [hamiltorch](https://github.com/AdamCobb/hamiltorch)
 PyTorch-based library for Riemannian Manifold Hamiltonian Monte Carlo (RMHMC) and inference in Bayesian neural networks.
 
-6) [bayesian-deep-rul](https://github.com/kkangshen/bayesian-deep-rul)
+7) [bayesian-deep-rul](https://github.com/kkangshen/bayesian-deep-rul)
 Bayesian and frequentist deep learning models for remaining useful life (RUL) estimation are evaluated on simulated run-to-failure data. Implemented in PyTorch.
 
 

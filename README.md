@@ -8,7 +8,10 @@ Tools to test BNN inference algorithms and techniques to predict RUL on aeronaut
 Few publications yet with N-CMAPSS, so it might be an opportunity to publish.
     For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
 
-Use of/contribution to [TyXE](https://github.com/TyXe-BDL/TyXe) (e.g. Flipout RNN - see issue #6) or [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning) github projects to be considered.
+Use of/contribution to BNN libraries to be considered, for instance: 
+- [TyXE](https://github.com/TyXe-BDL/TyXe) (e.g. Flipout RNN - see issue #6) 
+- [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
+- [bayesian-torch](https://github.com/IntelLabs/bayesian-torch#installing-bayesian-torch)
 
 ### Datasets
 

@@ -5,7 +5,7 @@ from typing import Callable, Dict, Iterator, List, NamedTuple, Union
 
 import numpy as np
 import pandas as pd
-from mltbox.utils.lmdb_utils import create_lmdb
+from ..utils.lmdb_utils import create_lmdb
 from tqdm.autonotebook import tqdm
 
 
@@ -155,7 +155,6 @@ def _load_data_from_file(file, subset="FD001"):
     # df = df.drop(
     #     ["setting_" + str(i + 1) for i in range(n_operational_settings)], axis=1
     # )
-
     # drop sensors which are useless according to the literature
     to_drop = [1, 5, 6, 10, 16, 18, 19]
     df = df.drop(["sensor_" + str(d) for d in to_drop], axis=1)
@@ -165,7 +164,7 @@ def _load_data_from_file(file, subset="FD001"):
 
 def generate_lmdb(args, datasets=["train", "val", "test"]):
     lmdb_dir = Path(f"{args.out_path}/lmdb")
-    lmdb_dir.mkdir(exist_ok=False)
+    lmdb_dir.mkdir(exist_ok=True)
     for ds in datasets:
         print(f"Generating {ds} lmdb ...")
         filelist = list(Path(f"{args.out_path}/parquet").glob(f"{ds}*.parquet"))

@@ -96,9 +96,9 @@ Recent technique with few published material, so may be worth including it in a 
 
 ### Tools
 
-These are some of the frameworks compatible with pytorch which can be used for BNN training/testing. **TyXE**, **bayesian-torch** or **blitz** seem a priori good options. 
+These are some of the frameworks compatible with pytorch which can be used for BNN training/testing. **TyXE**, **bayesian-torch** seem a priori good options. 
 
-**TyXE** based on Pyro is powerful but the learning curbe is more important than for bayesian-torch. The integration with **pytorch-lighning** is probably easier with **bayesian-torch**/**blitz**.
+**TyXE** based on Pyro is powerful but the learning curbe is more important than for **bayesian-torch**. The integration with **pytorch-lighning** is probably easier with **bayesian-torch** and the contributors seem more active.
 
 
 1) [pyro](https://pyro.ai/) Deep Universal Probabilistic Programming

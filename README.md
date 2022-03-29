@@ -8,23 +8,53 @@ Tools to test BNN inference algorithms and techniques to predict RUL on aeronaut
     Few publications yet with N-CMAPSS (found none with BNN), so it might be an opportunity for us to publish.
     For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
 
-Contribution to BNN libraries would be nice as well, for instance: 
-- [TyXE](https://github.com/TyXe-BDL/TyXe) (e.g. Flipout RNN - see issue #6) 
-- [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
-- [bayesian-torch](https://github.com/IntelLabs/bayesian-torch#installing-bayesian-torch)
+As there are several BNN frameworks available, it is necessary to assess them to make a choice (see Tools subsection in the end).
 
 ### Datasets
 
 NASA DASHlink:
 
-1) CMAPSS dataset for turbofan engines (/data/data/nasa/CMAPSSData.zip)
+1) CMAPSS dataset for turbofan engines (In GPU machine: /data/data/nasa/turbofan/CMAPSSData.zip)
+
 Saxena, Abhinav, Kai Goebel, Don Simon, et Neil Eklund. « Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation ». In 2008 International Conference on Prognostics and Health Management, 1‑9. Denver, CO, USA: IEEE, 2008. https://doi.org/10.1109/PHM.2008.4711414.
 Classical benchmark dataset. Lots of published articles for RUL benchmarking including a few with BNN.
 
-2) N-CMAPSS dataset for turbojet engines (/data/data/nasa/CMAPSSData2.zip)
+2) N-CMAPSS dataset for turbojet engines (In GPU machine: /data/data/nasa/turbofan/NCMAPSSData.zip)
+
 Arias Chao, Manuel, Chetan Kulkarni, Kai Goebel, et Olga Fink. « Aircraft Engine Run-to-Failure Dataset under Real Flight Conditions for Prognostics and Diagnostics ». Data 6, nᵒ 1 (13 janvier 2021): 5. https://doi.org/10.3390/data6010005.
 Very recent, bigger and more realistic dataset than CMAPSS.
 
+### Installation
+Some notebooks and python code are provided as examples to train/test models for the CMAPSS dataset with pytorch-lightning and TyXE tools.  
+
+1) Create a conda environment with Pytorch and CUDA toolkit 11.3.
+```sh
+conda create --name bnnrul
+conda activate bnnrul
+mamba install pytorch cudatoolkit=11.3 -c pytorch
+```
+
+2) Install Jupyter Lab and related stuff for bnnrul
+```sh
+mamba install -c conda-forge jupyterlab_widgets
+mamba install -c conda-forge ipywidgets
+mamba install -c anaconda ipykernel
+python -m ipykernel install --user --name=bnnrul
+```
+
+3) Install TyXe:
+```sh
+git clone git@github.com:TyXe-BDL/TyXe.git
+cd TyXe
+pip install -e .
+```
+
+4) Install bnnrul:
+```sh
+git clone git@github.com:lbasora/bnnrul.git
+cd bnnrul
+python setup.py install
+```
 
 ### References BNN
 
@@ -65,6 +95,12 @@ Recent technique with few published material, so may be worth including it in a 
 
 
 ### Tools
+
+These are some of the frameworks compatible with pytorch which can be used for BNN training/testing. **TyXE**, **bayesian-torch** or **blitz** seem a priori good options. 
+
+**TyXE** based on Pyro is powerful but the learning curbe is more important than for bayesian-torch. The integration with **pytorch-lighning** is probably easier with **bayesian-torch**/**blitz**.
+
+
 1) [pyro](https://pyro.ai/) Deep Universal Probabilistic Programming
 Tutorial: http://pyro.ai/examples/intro_long.html
 
@@ -72,20 +108,14 @@ Tutorial: http://pyro.ai/examples/intro_long.html
 Linear and CNN based BNN implemented.
 (For RNN based BNN with flipout see issue #6).
 
-3) [Edward2](https://github.com/google/edward2)
-A simple probabilistic programming language. Same purpose than pyro+tyxe but with tensorflow, numpy or jax as backends.
+3) [bayesian-torch](https://github.com/IntelLabs/bayesian-torch#installing-bayesian-torch)
+A library for BNN layers and uncertainty estimation in Deep Learning extending the core of PyTorch (developed by IntelLabs).
 
-4) [bayesian-torch](https://github.com/IntelLabs/bayesian-torch#installing-bayesian-torch)
-A library for Bayesian neural network layers and uncertainty estimation in Deep Learning extending the core of PyTorch (developed by IntelLabs).
-
-5) [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
+4) [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
 A simple and extensible library to create Bayesian Neural Network layers on PyTorch. 
 
-6) [hamiltorch](https://github.com/AdamCobb/hamiltorch)
+5) [hamiltorch](https://github.com/AdamCobb/hamiltorch)
 PyTorch-based library for Riemannian Manifold Hamiltonian Monte Carlo (RMHMC) and inference in Bayesian neural networks.
-
-7) [bayesian-deep-rul](https://github.com/kkangshen/bayesian-deep-rul)
-Bayesian and frequentist deep learning models for remaining useful life (RUL) estimation are evaluated on simulated run-to-failure data. Implemented in PyTorch.
 
 
 

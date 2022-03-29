@@ -2,13 +2,16 @@
 
 Tools to test BNN inference algorithms and techniques to predict RUL on aeronautical systems.
 
-### Ideas for work
-- Benchmark with NASA CMAPSS [1] dataset complementary to the existing ones (e.g. Caceres et al. [9]) by using other inference algorithms.
-- Benchmark with NASA N-CMAPSS [2] dataset on the recent (2021) NASA dataset. 
-    Few publications yet with N-CMAPSS (found none with BNN), so it might be an opportunity for us to publish.
-    For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
+### Ideas for work during the internship
+To test the different BNN inference algorithms we can use the NASA CMAPSS and/or N-CMAPSS datasets.
 
-As there are several BNN frameworks available, it is necessary to assess them to make a choice (see Tools subsection in the end).
+One possibility is to complete published benchmarks with the CMAPSS [1] (e.g. Caceres et al. [9]) by using other inference algorithms.
+
+Perhaps even better is to to do the benchmark with the recent (2021) NASA N-CMAPSS [2] dataset. No publications found with BNN, so it might be an opportunity for us to publish. 
+
+For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
+
+As there are several BNN frameworks available (TyXe, bayesian-torch...), it will be necessary to assess them to make a choice (see Tools subsection in the end). It would be nice to make some contribution as most of them are in an early stage of development.
 
 ### Datasets
 
@@ -24,8 +27,9 @@ Classical benchmark dataset. Lots of published articles for RUL benchmarking inc
 Arias Chao, Manuel, Chetan Kulkarni, Kai Goebel, et Olga Fink. « Aircraft Engine Run-to-Failure Dataset under Real Flight Conditions for Prognostics and Diagnostics ». Data 6, nᵒ 1 (13 janvier 2021): 5. https://doi.org/10.3390/data6010005.
 Very recent, bigger and more realistic dataset than CMAPSS.
 
-### Installation
-Some notebooks and python code are provided as examples to train/test models for the CMAPSS dataset with pytorch-lightning and TyXE tools.  
+### Code Examples Installation
+Some notebooks and python code are provided as examples to train/test models for the CMAPSS dataset with pytorch-lightning and TyXe tools.  
+For N-CMAPSS only a notebook (ncmapss_example_data_loading_and_exploration.ipynb) is provided.
 
 1) Create a conda environment with Pytorch and CUDA toolkit 11.3.
 ```sh
@@ -34,7 +38,7 @@ conda activate bnnrul
 mamba install pytorch cudatoolkit=11.3 -c pytorch
 ```
 
-2) Install Jupyter Lab and related stuff for bnnrul
+2) Install Jupyter Lab and related tools to create a jupyter kernel for the conda env
 ```sh
 mamba install -c conda-forge jupyterlab_widgets
 mamba install -c conda-forge ipywidgets
@@ -42,12 +46,7 @@ mamba install -c anaconda ipykernel
 python -m ipykernel install --user --name=bnnrul
 ```
 
-3) Install TyXe:
-```sh
-git clone git@github.com:TyXe-BDL/TyXe.git
-cd TyXe
-pip install -e .
-```
+3) Install BNN frameworks: TyXe, bayesian-torch ...
 
 4) Install bnnrul:
 ```sh
@@ -96,26 +95,32 @@ Recent technique with few published material, so may be worth including it in a 
 
 ### Tools
 
-These are some of the frameworks compatible with pytorch which can be used for BNN training/testing. **TyXE**, **bayesian-torch** seem a priori good options. 
+These are some of the frameworks compatible with pytorch which can be used for BNN training/testing. **TyXE** or **bayesian-torch** seem a priori good options. 
 
 **TyXE** based on Pyro is powerful but the learning curbe is more important than for **bayesian-torch**. The integration with **pytorch-lighning** is probably easier with **bayesian-torch** and the contributors seem more active.
 
 
-1) [pyro](https://pyro.ai/) Deep Universal Probabilistic Programming
-Tutorial: http://pyro.ai/examples/intro_long.html
+1) [TyXE](https://github.com/TyXe-BDL/TyXe)
 
-2) [TyXE](https://github.com/TyXe-BDL/TyXe) Pyro-based BNNs for Pytorch users
-Linear and CNN based BNN implemented.
-(For RNN based BNN with flipout see issue #6).
+- BNNs for [Pyro](https://pyro.ai/) users. Pyro Tutorial: http://pyro.ai/examples/intro_long.html
+- Linear and CNN based BNN implemented (For RNN based BNN with flipout see issue #6).
+- Preliminary tests in cmapss_rul_linear_tyxe.ipynb. Issues with checkpointing, compatibility with latest pyro version, integration with pytorch-lightning not evident.
 
-3) [bayesian-torch](https://github.com/IntelLabs/bayesian-torch#installing-bayesian-torch)
-A library for BNN layers and uncertainty estimation in Deep Learning extending the core of PyTorch (developed by IntelLabs).
+2) [bayesian-torch](https://github.com/IntelLabs/bayesian-torch#installing-bayesian-torch)
 
-4) [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
-A simple and extensible library to create Bayesian Neural Network layers on PyTorch. 
+- A library for BNN layers and uncertainty estimation in Deep Learning extending the core of PyTorch (developed by IntelLabs).
+- Linear, CNN and RNN implemented.
+- It would be nice to test integration with pytorch-lightning
 
-5) [hamiltorch](https://github.com/AdamCobb/hamiltorch)
-PyTorch-based library for Riemannian Manifold Hamiltonian Monte Carlo (RMHMC) and inference in Bayesian neural networks.
+3) [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
+
+- A simple and extensible library to create Bayesian Neural Network layers on PyTorch. 
+- Used in Benker et al. [13]
+
+4) [hamiltorch](https://github.com/AdamCobb/hamiltorch)
+
+- PyTorch-based library for Riemannian Manifold Hamiltonian Monte Carlo (RMHMC) and inference in Bayesian neural networks.
+- Used in Benker et al. [13]
 
 
 

@@ -27,9 +27,9 @@ Classical benchmark dataset. Lots of published articles for RUL benchmarking inc
 Arias Chao, Manuel, Chetan Kulkarni, Kai Goebel, et Olga Fink. « Aircraft Engine Run-to-Failure Dataset under Real Flight Conditions for Prognostics and Diagnostics ». Data 6, nᵒ 1 (13 janvier 2021): 5. https://doi.org/10.3390/data6010005.
 Very recent, bigger and more realistic dataset than CMAPSS.
 
-### Code Examples Installation
-Some notebooks and python code are provided as examples to train/test models for the CMAPSS dataset with pytorch-lightning and TyXe tools.  
-For N-CMAPSS only a notebook (ncmapss_example_data_loading_and_exploration.ipynb) is provided.
+### Code Examples
+- For the CMAPSS dataset, some notebooks and python code are provided to generate the LMDB dataset as well as some examples on how to train/test models with pytorch-lightning and TyXe tools.  
+- For N-CMAPSS only a notebook (ncmapss_example_data_loading_and_exploration.ipynb) is provided based on the original one by the N-CMAPSS authors. So, if N-CMAPSS is to be used, it will be necessary to start by adapting the CMAPSS code to also generate a LMDB dataset.
 
 1) Create a conda environment with Pytorch and CUDA toolkit 11.3.
 ```sh

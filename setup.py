@@ -12,7 +12,7 @@ setup(
         "scikit-learn",
         "pyarrow",
         "pandas",
-        "pytorch-lightning",
+        "pytorch-lightning==1.5.9",
         "lmdb",
         "fastdtw",
         "tqdm",

@@ -6,16 +6,9 @@ import torch
 import torch.nn as nn
 from torch.functional import F
 
-# Model architectures based on:
-# https://github.com/kkangshen/bayesian-deep-rul/blob/master/models/
-# (To be assessed and modified if necessary)
-
 
 def get_checkpoint(checkpoint_dir):
     if checkpoint_dir.is_dir():
-        best_model_path = Path(checkpoint_dir, "best_model_path.txt")
-        if best_model_path.exists():
-            return best_model_path
         checkpoint_file = sorted(
             checkpoint_dir.glob("*.ckpt"), key=os.path.getmtime, reverse=True
         )
@@ -23,6 +16,9 @@ def get_checkpoint(checkpoint_dir):
     return None
 
 
+# Model architectures based on:
+# https://github.com/kkangshen/bayesian-deep-rul/blob/master/models/
+# (To be assessed and modified if necessary)
 class Linear(nn.Module):
     def __init__(self, win_length, n_features):
         super().__init__()
@@ -65,40 +61,42 @@ class Conv(nn.Module):
 
 class CMAPSSModel(pl.LightningModule):
     def __init__(
-        self, win_length, n_features, arch="linear", lr=1e-3, weight_decay=1e-5
+        self, win_length, n_features, net="linear", lr=1e-3, weight_decay=1e-5
     ):
         super().__init__()
         self.save_hyperparameters()
         self.lr = lr
         self.weight_decay = weight_decay
-        if arch == "linear":
+        if net == "linear":
             self.net = Linear(win_length, n_features)
-        elif arch == "conv":
+        elif net == "conv":
             self.net = Conv(win_length, n_features)
         else:
-            raise ValueError(f"Model architecture {arch} not implemented")
+            # raise ValueError(f"Model architecture {net} not implemented")
+            self.net = net
 
     def forward(self, x):
         return self.net(x)
 
-    def training_step(self, batch, batch_idx):
+    def _compute_loss(self, batch, batch_idx):
         (x, y) = batch
         y = y.view(-1, 1)
         y_hat = self.net(x)
-        loss = F.mse_loss(y_hat, y)
+        return F.mse_loss(y_hat, y)
+
+    def training_step(self, batch, batch_idx):
+        loss = self._compute_loss(batch, batch_idx)
         self.log("loss/train", loss)
         return loss
 
     def validation_step(self, batch, batch_idx):
-        (x, y) = batch
-        y = y.view(-1, 1)
-        y_hat = self.net(x)
-        loss = F.mse_loss(y_hat, y)
+        loss = self._compute_loss(batch, batch_idx)
         self.log("loss/val", loss)
         return loss
 
     def test_step(self, batch, batch_idx):
         (x, y) = batch
+        y = y.view(-1, 1)
         y_hat = self.net(x)
         loss = F.mse_loss(y_hat, y)
         self.log(f"y_{batch_idx}", y)
@@ -115,5 +113,5 @@ class CMAPSSModel(pl.LightningModule):
     @staticmethod
     def add_model_specific_args(parent_parser):
         parser = parent_parser.add_argument_group("CMAPSSModel")
-        parser.add_argument("--arch", type=str, default="linear")
+        parser.add_argument("--net", type=str, default="linear")
         return parent_parser

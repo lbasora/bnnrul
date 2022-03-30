@@ -1,9 +1,10 @@
 import os
-from pathlib import Path
 
 import pytorch_lightning as pl
 import torch
 import torch.nn as nn
+from bayesian_torch.models.dnn_to_bnn import dnn_to_bnn, get_kl_loss
+from pytorch_lightning.utilities import rank_zero_only
 from torch.functional import F
 
 
@@ -14,6 +15,13 @@ def get_checkpoint(checkpoint_dir):
         )
         return str(checkpoint_file[0]) if checkpoint_file else None
     return None
+
+
+class TBLogger(pl.loggers.TensorBoardLogger):
+    @rank_zero_only
+    def log_metrics(self, metrics, step):
+        metrics.pop("epoch", None)
+        return super().log_metrics(metrics, step)
 
 
 # Model architectures based on:
@@ -61,48 +69,43 @@ class Conv(nn.Module):
 
 class CMAPSSModel(pl.LightningModule):
     def __init__(
-        self, win_length, n_features, net="linear", lr=1e-3, weight_decay=1e-5
+        self,
+        win_length,
+        n_features,
+        net="linear",
+        lr=1e-3,
+        weight_decay=1e-5,
     ):
         super().__init__()
         self.save_hyperparameters()
-        self.lr = lr
-        self.weight_decay = weight_decay
         if net == "linear":
             self.net = Linear(win_length, n_features)
         elif net == "conv":
             self.net = Conv(win_length, n_features)
         else:
-            # raise ValueError(f"Model architecture {net} not implemented")
-            self.net = net
+            raise ValueError(f"Model architecture {net} not implemented")
+        self.lr = lr
+        self.weight_decay = weight_decay
 
     def forward(self, x):
         return self.net(x)
 
-    def _compute_loss(self, batch, batch_idx):
-        (x, y) = batch
-        y = y.view(-1, 1)
-        y_hat = self.net(x)
-        return F.mse_loss(y_hat, y)
-
-    def training_step(self, batch, batch_idx):
-        loss = self._compute_loss(batch, batch_idx)
-        self.log("loss/train", loss)
-        return loss
-
-    def validation_step(self, batch, batch_idx):
-        loss = self._compute_loss(batch, batch_idx)
-        self.log("loss/val", loss)
-        return loss
-
-    def test_step(self, batch, batch_idx):
+    def _compute_loss(self, batch, phase):
         (x, y) = batch
         y = y.view(-1, 1)
         y_hat = self.net(x)
         loss = F.mse_loss(y_hat, y)
-        self.log(f"y_{batch_idx}", y)
-        self.log(f"y_hat{batch_idx}", y_hat)
-        self.log(f"err_{batch_idx}", y.sub(y_hat).abs())
+        self.log(f"loss/{phase}", loss)
         return loss
+
+    def training_step(self, batch, batch_idx):
+        return self._compute_loss(batch, "train")
+
+    def validation_step(self, batch, batch_idx):
+        return self._compute_loss(batch, "val")
+
+    def test_step(self, batch, batch_idx):
+        return self._compute_loss(batch, "test")
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(
@@ -115,3 +118,50 @@ class CMAPSSModel(pl.LightningModule):
         parser = parent_parser.add_argument_group("CMAPSSModel")
         parser.add_argument("--net", type=str, default="linear")
         return parent_parser
+
+
+class CMAPSSModelBnn(CMAPSSModel):
+    def __init__(
+        self,
+        win_length,
+        n_features,
+        net="linear",
+        const_bnn_prior_parameters=None,
+        num_mc_samples_elbo=1,
+        num_predictions=1,
+        lr=1e-3,
+        weight_decay=1e-5,
+    ):
+        super().__init__(win_length, n_features, net, lr, weight_decay)
+        self.num_mc_samples_elbo = num_mc_samples_elbo
+        self.num_predictions = num_predictions
+        if const_bnn_prior_parameters is not None:
+            dnn_to_bnn(self, const_bnn_prior_parameters)
+
+    def _compute_loss(self, batch, phase):
+        (x, y) = batch
+        y = y.view(-1, 1)
+        y_hat = self.net(x)
+        mse_loss = F.mse_loss(y_hat, y)
+        kl = get_kl_loss(self)
+        loss = mse_loss + kl / len(batch)
+        self.log(f"loss/{phase}", loss)
+        self.log(f"loss_mse/{phase}", mse_loss)
+        self.log(f"loss_kl/{phase}", kl / len(batch))
+        return loss
+
+    def training_step(self, batch, batch_idx):
+        return torch.stack(
+            [
+                self._compute_loss(batch, "train")
+                for _ in range(self.num_mc_samples_elbo)
+            ]
+        ).mean(dim=0)
+
+    def validation_step(self, batch, batch_idx):
+        return self._compute_loss(batch, "val")
+
+    def test_step(self, batch, batch_idx):
+        return torch.stack(
+            [self._compute_loss(batch, "test") for _ in range(self.num_predictions)]
+        ).mean(dim=0)

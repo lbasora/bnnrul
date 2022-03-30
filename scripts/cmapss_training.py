@@ -3,14 +3,14 @@ from pathlib import Path
 
 import pytorch_lightning as pl
 from bnnrul.cmapss.dataset import CMAPSSDataModule
-from bnnrul.cmapss.models import CMAPSSModel, get_checkpoint
+from bnnrul.cmapss.models import CMAPSSModel, TBLogger, get_checkpoint
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("--out_path", type=str, default="./results/cmapss")
     parser.add_argument("--data_path", type=str, default="./data/cmapss")
-    parser.add_argument("--scn", type=str, default="deterministic")
+    parser.add_argument("--scn", type=str, default="dnn_ptl")
     parser.add_argument("--batch_size", type=int, default=100)
     parser.add_argument("--gpu", type=int, default=0)
     parser = CMAPSSModel.add_model_specific_args(parser)
@@ -31,7 +31,7 @@ if __name__ == "__main__":
         args,
         # ckpt_path=checkpoint,
         resume_from_checkpoint=checkpoint_file,
-        logger=pl.loggers.TensorBoardLogger(
+        logger=TBLogger(
             f"{args.out_path}/{args.scn}/lightning_logs/{args.net}",
             name=f"{args.net}",
             default_hp_metric=False,

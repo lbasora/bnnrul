@@ -83,15 +83,20 @@ Dropout based technique:
 
 
 ### References BNN based RUL estimation
+
+C-MAPSS:
+
 9) Caceres, J., Gonzalez, D., Zhou, T., & Droguett, E. L. A probabilistic Bayesian recurrent neural network for remaining useful life prognostics considering epistemic and aleatory uncertainties. Structural Control and Health Monitoring, 2021, vol. 28, no 10
 
-10) Huang, Dengshan, Rui Bai, Shuai Zhao, Pengfei Wen, Shengyue Wang, et Shaowei Chen. « Bayesian Neural Network Based Method of Remaining Useful Life Prediction and Uncertainty Quantification for Aircraft Engine ». In 2020 IEEE International Conference on Prognostics and Health Management (ICPHM), 1‑8. Detroit, MI, USA: IEEE, 2020. https://doi.org/10.1109/ICPHM49022.2020.9187044
+10) Benker, Maximilian, Lukas Furtner, Thomas Semm, et Michael F. Zaeh. « Utilizing Uncertainty Information in Remaining Useful Life Estimation via Bayesian Neural Networks and Hamiltonian Monte Carlo ». Journal of Manufacturing Systems, decembre 2020, https://doi.org/10.1016/j.jmsy.2020.11.005
 
-11) Li, Gaoyang, Li Yang, Chi-Guhn Lee, Xiaohua Wang, et Mingzhe Rong. « A Bayesian Deep Learning RUL Framework Integrating Epistemic and Aleatoric Uncertainties ». IEEE Transactions on Industrial Electronics, 2020, 1‑1. https://doi.org/10.1109/TIE.2020.3009593
+11) Huang, Dengshan, Rui Bai, Shuai Zhao, Pengfei Wen, Shengyue Wang, et Shaowei Chen. « Bayesian Neural Network Based Method of Remaining Useful Life Prediction and Uncertainty Quantification for Aircraft Engine ». In 2020 IEEE International Conference on Prognostics and Health Management (ICPHM), https://doi.org/10.1109/ICPHM49022.2020.9187044
 
 12) Peng, Weiwen, Zhi-Sheng Ye, et Nan Chen. « Bayesian Deep-Learning-Based Health Prognostics Toward Prognostics Uncertainty ». IEEE Transactions on Industrial Electronics 67, nᵒ 3 (march 2020): 2283‑93. https://doi.org/10.1109/TIE.2019.2907440
 
-13)  Benker, Maximilian, Lukas Furtner, Thomas Semm, et Michael F. Zaeh. « Utilizing Uncertainty Information in Remaining Useful Life Estimation via Bayesian Neural Networks and Hamiltonian Monte Carlo ». Journal of Manufacturing Systems, decembre 2020, S0278612520301928. https://doi.org/10.1016/j.jmsy.2020.11.005
+Other systems:
+
+13) Li, Gaoyang, Li Yang, Chi-Guhn Lee, Xiaohua Wang, et Mingzhe Rong. « A Bayesian Deep Learning RUL Framework Integrating Epistemic and Aleatoric Uncertainties ». IEEE Transactions on Industrial Electronics, 2020, 1‑1. https://doi.org/10.1109/TIE.2020.3009593
 
 
 ### Tools
@@ -116,12 +121,12 @@ These are some of the frameworks compatible with pytorch which can be used for B
 3) [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
 
 - A simple and extensible library to create Bayesian Neural Network layers on PyTorch. 
-- Used in Benker et al. [13]
+- Used in Benker et al. [10]
 
 4) [hamiltorch](https://github.com/AdamCobb/hamiltorch)
 
 - PyTorch-based library for Riemannian Manifold Hamiltonian Monte Carlo (RMHMC) and inference in Bayesian neural networks.
-- Used in Benker et al. [13]
+- Used in Benker et al. [10]
 
 
 

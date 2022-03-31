@@ -111,16 +111,22 @@ These are some of the frameworks compatible with pytorch which can be used for B
 - BNNs for [Pyro](https://pyro.ai/) users. Pyro Tutorial: http://pyro.ai/examples/intro_long.html
 - Linear and CNN based BNN implemented (For RNN based BNN with flipout see issue #6).
 - Preliminary tests in cmapss_rul_linear_tyxe.ipynb. Issues with checkpointing, compatibility with latest pyro version, integration with pytorch-lightning not evident.
+- It seems very powerful with pyro as backend, but requires time to learn pyro mechanisms (poutines).
 
 2) [bayesian-torch](https://github.com/IntelLabs/bayesian-torch#installing-bayesian-torch)
 
 - A library for BNN layers and uncertainty estimation in Deep Learning extending the core of PyTorch (developed by IntelLabs).
 - Linear, CNN and RNN implemented.
-- It would be nice to test integration with pytorch-lightning
+- Preliminary tests in cmapss_rul_linear_bt.ipynb.
+- It seems to integrate with pytorch-lightning easily.
+- Lacks likelihood functions for data noise modelling and perhaps other aspects present already in TyXe.
 
 3) [blitz](https://github.com/piEsposito/blitz-bayesian-deep-learning)
 
-- A simple and extensible library to create Bayesian Neural Network layers on PyTorch. 
+- A simple and extensible library to create BNN layers on PyTorch. 
+- Its author is also contributing to bayesian-torch.
+- Bayesian layers need to be manually defined unlike in bayesian-torch/TyXe which can turn deterministic NN into BNN automatically.
+- Do not know what advantages it has compared to bayesian-torch (haven't investigated it).
 - Used in Benker et al. [10]
 
 4) [hamiltorch](https://github.com/AdamCobb/hamiltorch)

@@ -5,10 +5,9 @@ Tools to test BNN inference algorithms and techniques to predict RUL on aeronaut
 ### Ideas for work during the internship
 To test the different BNN inference algorithms we can use the NASA CMAPSS and/or N-CMAPSS datasets.
 
-One possibility is to complete published benchmarks with the CMAPSS [1] (e.g. Caceres et al. [9]) by using other inference algorithms.
+1) One possibility is to complete published benchmarks with the CMAPSS [1] (e.g. Caceres et al. [9]) by using other inference algorithms.
 
-Perhaps even better is to to do the benchmark with the recent (2021) NASA N-CMAPSS [2] dataset. No publications found with BNN, so it might be an opportunity for us to publish. 
-
+2) Perhaps even better is to to do the benchmark with the recent (2021) NASA N-CMAPSS [2] dataset. No publications found with BNN, so it might be an opportunity for us to publish. 
 For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
 
 As there are several BNN frameworks available (TyXe, bayesian-torch...), it will be necessary to assess them to make a choice (see Tools subsection in the end). It would be nice to make some contribution as most of them are in an early stage of development.
@@ -57,26 +56,28 @@ python setup.py install
 
 ### References BNN
 
+BNN general reference for people familiar with deterministic deep learning:
+
 3) Jospin, Laurent Valentin, Wray Buntine, Farid Boussaid, Hamid Laga, et Mohammed Bennamoun. « Hands-on Bayesian Neural Networks -- a Tutorial for Deep Learning Users ». ArXiv:2007.06823 [Cs, Stat], 14 juillet 2020. http://arxiv.org/abs/2007.06823.
 
-BNN general reference for people familiar with deterministic deep learning.
+Google DeepMind paper introducing Bayes by Backprop technique:
 
 4) Blundell, Charles, Julien Cornebise, Koray Kavukcuoglu, et Daan Wierstra. « Weight Uncertainty in Neural Networks ». ArXiv:1505.05424 [Cs, Stat], 21 mai 2015. http://arxiv.org/abs/1505.05424.
 
-Google DeepMind paper introducing Bayes by Backprop technique.
+Paper introducing Local Reparameterization Trick (LRT):
 
 5) Kingma, Diederik P., Tim Salimans, et Max Welling. « Variational Dropout and the Local Reparameterization Trick ». ArXiv:1506.02557 [Cs, Stat], 20 décembre 2015. http://arxiv.org/abs/1506.02557.
 
-Paper introducing Local Reparameterization (LRT) Trick.
+Paper introducing Flipout technique:
 
 6) Wen, Yeming, Paul Vicol, Jimmy Ba, Dustin Tran, et Roger Grosse. « Flipout: Efficient Pseudo-Independent Weight Perturbations on Mini-Batches ». ArXiv:1803.04386 [Cs, Stat], 2 avril 2018. http://arxiv.org/abs/1803.04386.
 
-Paper introducing Flipout technique.
+Recent technique with few published material, so may be worth including it in a benchmark with Bayes by Backprop, LRT, flipout:
 
 7) Pearce, T., Zaki, M., Brintrup, A., Anastassacos, N., and Neely, A. Uncertainty in neural networks: Bayesian
 ensembling. International Conference on Artificial Intelligence and Statistics (AISTATS), 2020
 
-Recent technique with few published material, so may be worth including it in a benchmark with Bayes by Backprop, LRT, flipout. 
+Dropout based technique:
 
 8) Gal, Yarin, et Zoubin Ghahramani. « Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning ». ArXiv:1506.02142 [Cs, Stat], 4 octobre 2016. http://arxiv.org/abs/1506.02142.
 

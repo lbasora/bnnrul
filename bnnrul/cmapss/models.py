@@ -17,6 +17,7 @@ def get_checkpoint(checkpoint_dir):
     return None
 
 
+# To get rid of the tensorboard epoch plot
 class TBLogger(pl.loggers.TensorBoardLogger):
     @rank_zero_only
     def log_metrics(self, metrics, step):
@@ -26,7 +27,7 @@ class TBLogger(pl.loggers.TensorBoardLogger):
 
 # Model architectures based on:
 # https://github.com/kkangshen/bayesian-deep-rul/blob/master/models/
-# (To be assessed and modified if necessary)
+# (Just model examples to be assessed and modified according to our needs)
 class Linear(nn.Module):
     def __init__(self, win_length, n_features):
         super().__init__()
@@ -121,6 +122,8 @@ class CMAPSSModel(pl.LightningModule):
 
 
 class CMAPSSModelBnn(CMAPSSModel):
+    # Basic implementation example with bayesian-pytorch
+    # TODO Likelihood models for data noise (see in TyXe tyxe.likelihoods module)
     def __init__(
         self,
         win_length,
@@ -159,9 +162,12 @@ class CMAPSSModelBnn(CMAPSSModel):
         ).mean(dim=0)
 
     def validation_step(self, batch, batch_idx):
-        return self._compute_loss(batch, "val")
+        return torch.stack(
+            [self._compute_loss(batch, "val") for _ in range(self.num_predictions)]
+        ).mean(dim=0)
 
     def test_step(self, batch, batch_idx):
         return torch.stack(
             [self._compute_loss(batch, "test") for _ in range(self.num_predictions)]
         ).mean(dim=0)
+        # TODO STD, CI

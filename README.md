@@ -1,14 +1,16 @@
-# bnnrul (Bayesian Neural Networks for Remaining Useful Life estimation)
+# bnnrul (Bayesian Neural Networks (BNN) for Remaining Useful Life estimation)
 
-Tools to test BNN inference algorithms and techniques to predict RUL on aeronautical systems.
+This repository offers some initial thoughts, references and tools in preparation for an internship at ONERA to test BNN inference algorithms and techniques for RUL prediction on aeronautical systems.
+
+The original code in this repository is now being further developed by the student at: https://github.com/arthurviens/bayesrul
 
 ### Ideas for work during the internship
 To test the different BNN inference algorithms we can use the NASA CMAPSS and/or N-CMAPSS datasets.
 
-1) One possibility is to complete published benchmarks with the CMAPSS [1] (e.g. Caceres et al. [9]) by using other inference algorithms.
+<!-- 1) One possibility is to complete published benchmarks with the CMAPSS [1] (e.g. Caceres et al. [9]) by using other inference algorithms.
 
 2) Perhaps even better is to to do the benchmark with the recent (2021) NASA N-CMAPSS [2] dataset. No publications found with BNN, so it might be an opportunity for us to publish. 
-For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110)
+For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110) -->
 
 As there are several BNN frameworks available (TyXe, bayesian-torch...), it will be necessary to assess them to make a choice (see Tools subsection in the end). It would be nice to make some contribution as most of them are in an early stage of development.
 

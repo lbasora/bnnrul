@@ -7,10 +7,7 @@ The original code in this repository is now being further developed by the stude
 ### Ideas for work during the internship
 To test the different BNN inference algorithms we can use the NASA CMAPSS and/or N-CMAPSS datasets.
 
-<!-- 1) One possibility is to complete published benchmarks with the CMAPSS [1] (e.g. Caceres et al. [9]) by using other inference algorithms.
-
-2) Perhaps even better is to to do the benchmark with the recent (2021) NASA N-CMAPSS [2] dataset. No publications found with BNN, so it might be an opportunity for us to publish. 
-For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110) -->
+For N-CMAPSS, [see 2021 PHM Conference Data Challenge](https://data.phmsociety.org/2021-phm-conference-data-challenge/). Winners: [paper1](https://papers.phmsociety.org/index.php/phmconf/article/view/3108), [paper2](https://papers.phmsociety.org/index.php/phmconf/article/view/3109), [paper3](https://papers.phmsociety.org/index.php/phmconf/article/view/3110) 
 
 As there are several BNN frameworks available (TyXe, bayesian-torch...), it will be necessary to assess them to make a choice (see Tools subsection in the end). It would be nice to make some contribution as most of them are in an early stage of development.
 
@@ -18,12 +15,12 @@ As there are several BNN frameworks available (TyXe, bayesian-torch...), it will
 
 NASA DASHlink:
 
-1) CMAPSS dataset for turbofan engines (In GPU machine: /data/data/nasa/turbofan/CMAPSSData.zip)
+1) CMAPSS dataset for turbofan engines
 
 Saxena, Abhinav, Kai Goebel, Don Simon, et Neil Eklund. « Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation ». In 2008 International Conference on Prognostics and Health Management, 1‑9. Denver, CO, USA: IEEE, 2008. https://doi.org/10.1109/PHM.2008.4711414.
 Classical benchmark dataset. Lots of published articles for RUL benchmarking including a few with BNN.
 
-2) N-CMAPSS dataset for turbojet engines (In GPU machine: /data/data/nasa/turbofan/NCMAPSSData.zip)
+2) N-CMAPSS dataset for turbojet engines
 
 Arias Chao, Manuel, Chetan Kulkarni, Kai Goebel, et Olga Fink. « Aircraft Engine Run-to-Failure Dataset under Real Flight Conditions for Prognostics and Diagnostics ». Data 6, nᵒ 1 (13 janvier 2021): 5. https://doi.org/10.3390/data6010005.
 Very recent, bigger and more realistic dataset than CMAPSS.
